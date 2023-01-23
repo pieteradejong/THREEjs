@@ -15,35 +15,33 @@ window.addEventListener( 'resize', () => {
 	camera.updateProjectionMatrix()
 })
 
-// cube
-// var geometry = new THREE.BoxGeometry( 1, 1, 1)
 var geometry = new THREE.BoxGeometry(3,3,3)
 var material = new THREE.MeshStandardMaterial({color: 0xff0051})
-var cube = new THREE.Mesh (geometry, material)
+// var material = new THREE.MeshStandardMaterial({color: 0xfffde5})
+var cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
 
-// wireframe cube
-var geometry = new THREE.BoxGeometry( 3, 3, 3)
+var geometry = new THREE.BoxGeometry(6, 6, 6)
 var material = new THREE.MeshBasicMaterial( {
 	color: "#dadada", wireframe: true, transparent: true
 })
-var wireframeCube = new THREE.Mesh ( geometry, material )
-scene.add( wireframeCube )
+var wireframeCube = new THREE.Mesh(geometry, material)
+scene.add(wireframeCube)
 
-var ambientLight = new THREE.AmbientLight ( 0xffffff, 0.2)
-scene.add( ambientLight )
+// var ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
+var ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
+scene.add(ambientLight)
 
-var pointLight = new THREE.PointLight( 0xffffff, 1 );
-pointLight.position.set( 25, 50, 25 );
-scene.add( pointLight );
+var pointLight = new THREE.PointLight(0xffffff, 1);
+// var pointLight = new THREE.PointLight(0xffffff, 10.0);
+pointLight.position.set(25, 50, 25);
+scene.add(pointLight);
 
 
 function animate() {
-	requestAnimationFrame( animate )
+	requestAnimationFrame(animate);
 	cube.rotation.x += 0.02;
 	cube.rotation.y += 0.02;
-	// wireframeCube.rotation.x -= 0.01;
-	// wireframeCube.rotation.y -= 0.01;
 	wireframeCube.rotation.x -= 0.005;
 	wireframeCube.rotation.y -= 0.005;
 	renderer.render( scene, camera )
