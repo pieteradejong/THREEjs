@@ -12,14 +12,12 @@ const material = new THREE.MeshBasicMaterial( {color: "turquoise", side: THREE.D
 const plane = new THREE.Mesh( geometry, material );
 scene.add( plane );
 
+function animate() {
+	requestAnimationFrame(animate);
+	plane.translateX(1);
+	// plane.rotation.y += 0.02;
+	renderer.render( scene, camera )
+}
 
-// function animate() {
-// 	requestAnimationFrame(animate);
-// 	// cube.rotation.x += 0.02;
-// 	// cube.rotation.y += 0.02;
-// 	// wireframeCube.rotation.x -= 0.005;
-// 	// wireframeCube.rotation.y -= 0.005;
-// 	// renderer.render( scene, camera )
-// }
+animate()
 
-renderer.render(scene, camera)
