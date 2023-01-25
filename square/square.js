@@ -14,8 +14,9 @@ scene.add( plane );
 
 function animate() {
 	requestAnimationFrame(animate);
-	plane.translateX(0.11);
-	plane.translateY(0.12);
+	plane.translateX(-0.11);
+	plane.translateY(0.02);
+	plane.translateZ(0.30);
 	renderer.render( scene, camera )
 }
 
