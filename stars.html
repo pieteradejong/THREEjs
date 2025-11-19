@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>White Dots on Black Background</title>
+    <style>
+      body { margin: 0; }
+      canvas { width: 100%; height: 100% }
+    </style>
+  </head>
+  <body>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+      // Set up scene, camera and renderer.
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 1);  // Set black background.
+      document.body.appendChild(renderer.domElement);
+
+      // Create a geometry with vertices for points.
+      const geometry = new THREE.CircleGeometry( 5, 32 ); 
+      var vertices = [];
+
+      // Create 10 random points, but initialize them at the center of the scene.
+      for (let i = 0; i < 10; i++) {
+        vertices.push(
+          0,  // x
+          0,  // y
+          0   // z
+        );
+      }
+
+      // Add vertices to geometry.
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+      // Create material (white color).
+      const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    //   var material = new THREE.PointsMaterial({color: 0xFFFFFF, size: 1.5});
+
+      // Create points and add to the scene.
+    //   var points = new THREE.Points(geometry, material);
+      const circle = new THREE.Mesh( geometry, material ); 
+      scene.add( circle );
+      points = circle;
+    //   scene.add(points);
+
+      // Move camera away from origin so we can see the points.
+      camera.position.z = 5;
+
+      // Render function.
+      function render() {
+        requestAnimationFrame(render);
+
+        // Access the position attribute.
+        var positions = points.geometry.attributes.position.array;
+
+        // Iterate over the positions and move each point along the x, y and z-axes.
+        for (let i = 0; i < positions.length; i += 3) {
+          positions[i] += 0.01;    // x
+          positions[i + 1] += 0.01;  // y
+          positions[i + 2] -= 0.1;  // z (moving towards the camera)
+        }
+
+        // Signal to three.js that the points have changed.
+        points.geometry.attributes.position.needsUpdate = true;
+
+        renderer.render(scene, camera);
+      }
+
+      // Call the render function.
+      render();
+    </script>
+  </body>
+</html>
