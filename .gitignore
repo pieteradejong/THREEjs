@@ -1,0 +1,28 @@
+# --- secrets ---
+.env
+.env.*
+!.env.example
+!.env.template
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- logs / temp ---
+*.log
+logs/
+tmp/
+*.tmp
+
+# --- node ---
+node_modules/
+dist/
+build/
+.cache/
+npm-debug.log*
+yarn-error.log*
+coverage/
