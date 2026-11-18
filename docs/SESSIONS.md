@@ -22,7 +22,8 @@ Newest first.
 - Mock mode ran at 60 fps in headless WebKit with no console errors.
 - Before the commit, `git status --ignored` showed that `vendor/three/build/` was gitignored by `build/`. It now has an exception, and the `vendor` step checks for it; with the exception removed, the step goes red.
 
+**Shipped:** pushed `0449848..20de3bc` to the public `main`, after `github-security-sweep.sh --check` exited 0. `CI` (`./test.sh --ci`) and `security` both passed on `20de3bc`.
+
 **Open (`TODO.md`):**
 - The real-Pi run. `raspberrypi.local` didn't answer twice this session, and login is still by password.
-- The first CI run.
 - The old demos' CDN loads.
