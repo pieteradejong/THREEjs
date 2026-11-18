@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="A three.js crystal that breathes with a Raspberry Pi's live temperature, load, fan and WiFi.">
+    <title>Pi Crystal</title>
+    <style>
+        :root {
+            --bg: #04060c;
+            --panel: rgba(12, 18, 30, 0.62);
+            --line: rgba(160, 220, 255, 0.16);
+            --text: #e4f3ff;
+            --muted: #8aa4b8;
+            --live: #5ef0a8;
+            --mock: #8fc8ff;
+            --off: #ffb35c;
+            --alarm: #ff5a48;
+        }
+        * { box-sizing: border-box; }
+        html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); overflow: hidden; }
+        body { position: relative; height: 100dvh; }
+        body { font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+        canvas#scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+        .hud {
+            position: fixed;
+            top: max(12px, env(safe-area-inset-top));
+            left: max(12px, env(safe-area-inset-left));
+            width: min(260px, calc(100vw - 24px));
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 4px 14px 12px;
+        }
+        .hud header { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+        .hud h1 { font-size: 15px; font-weight: 600; letter-spacing: 0.02em; margin: 0; flex: 1; }
+        .badge { font-size: 12px; padding: 3px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+        .badge.live { color: var(--live); }
+        .badge.mock { color: var(--mock); }
+        .badge.offline { color: var(--off); }
+        #toggle {
+            width: 44px; height: 44px; margin-right: -10px; border: 0; background: none; color: var(--muted);
+            font-size: 18px; cursor: pointer; border-radius: 10px;
+        }
+        #toggle:focus-visible { outline: 2px solid var(--mock); }
+        .hud.collapsed dl, .hud.collapsed .hint { display: none; }
+        .hud.collapsed #toggle { transform: rotate(180deg); }
+        dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 4px 0 0; }
+        dt { color: var(--muted); }
+        dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+        dd.alarm { color: var(--alarm); font-weight: 600; }
+        .cores { display: flex; gap: 4px; justify-content: flex-end; height: 18px; align-items: flex-end; }
+        .cores span { width: 10px; height: 100%; background: rgba(160, 220, 255, 0.12); border-radius: 2px; overflow: hidden; display: flex; align-items: flex-end; }
+        .cores i { display: block; width: 100%; height: 100%; background: var(--mock); transform-origin: bottom; transform: scaleY(0.04); }
+        .hint { margin: 10px 0 0; color: var(--muted); font-size: 12px; }
+        .hint code { color: var(--text); white-space: nowrap; }
+        noscript { position: fixed; inset: auto 12px 12px; }
+    </style>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "../vendor/three/build/three.module.min.js",
+            "three/addons/": "../vendor/three/addons/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <canvas id="scene" aria-label="Animated crystal driven by the Raspberry Pi's readings"></canvas>
+    <section class="hud" id="hud" aria-live="off">
+        <header>
+            <h1>Pi Crystal</h1>
+            <span class="badge mock" id="badge">starting</span>
+            <button id="toggle" type="button" aria-expanded="true" aria-controls="readings" title="Show or hide the readings">▴</button>
+        </header>
+        <dl id="readings">
+            <dt>Temperature</dt><dd id="v-temp">–</dd>
+            <dt>Load</dt><dd id="v-load">–</dd>
+            <dt>Cores</dt><dd><span class="cores" id="v-cores"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></span></dd>
+            <dt>Fan</dt><dd id="v-fan">–</dd>
+            <dt>WiFi</dt><dd id="v-wifi">–</dd>
+            <dt>Memory</dt><dd id="v-mem">–</dd>
+            <dt>Throttled</dt><dd id="v-throttle">–</dd>
+        </dl>
+        <p class="hint">Drag to orbit, pinch or scroll to zoom. <code>?source=mock</code> runs without the Pi; <code>?pi=host:port</code> picks one.</p>
+    </section>
+    <noscript>This page needs JavaScript and WebGL.</noscript>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

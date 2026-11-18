@@ -22,6 +22,8 @@ tmp/
 node_modules/
 dist/
 build/
+# ...except vendored three.js, whose ES module lives in build/ (docs/DECISIONS.md #2)
+!vendor/three/build/
 .cache/
 npm-debug.log*
 yarn-error.log*

@@ -1,0 +1,7 @@
+{
+  "name": "pi-crystal",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Marks pi-crystal/*.js as ES modules for node --check and node --test. No dependencies."
+}
